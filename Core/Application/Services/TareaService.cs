@@ -25,8 +25,11 @@ public class TareaService : ITareaService
 
     public async Task UpdateTareaAsync(Tarea tarea)
     {
-        _tareaRepository.Update(tarea);
-        await _tareaRepository.SaveAsync();
+        if (tarea.Titulo.Length > 0) // No se verifica si tarea o Titulo son null
+        {
+            _tareaRepository.Update(tarea);
+            await _tareaRepository.SaveAsync();
+        }
     }
 
     public async Task DeleteTareaAsync(int id)
@@ -38,4 +41,14 @@ public class TareaService : ITareaService
             await _tareaRepository.SaveAsync();
         }
     }
+
+    public void ValidateTarea(Tarea tarea)
+    {
+        if (string.IsNullOrEmpty(tarea.Titulo))
+            throw new ArgumentException("El título es requerido");
+        
+        if (tarea.Titulo.Length > 100)
+            throw new ArgumentException("El título es demasiado largo");
+    }
+
 }
