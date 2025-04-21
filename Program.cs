@@ -15,6 +15,7 @@ try
     // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
     builder.Services.ConfigureLogger();
     builder.Services.ConfigureDbContext(builder.Configuration);
+    builder.Services.AddEndpointsApiExplorer();
     builder.Services.ConfigureSwagger();
     builder.Services.ConfigureServices();
     builder.Services.AddControllers();
@@ -24,7 +25,7 @@ try
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
-    if (app.Environment.IsDevelopment())
+    //if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
         app.UseSwaggerUI();
@@ -38,6 +39,9 @@ try
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         dbContext.Database.Migrate();
     }
+
+    app.MapControllers();
+
 
     app.Run();
    

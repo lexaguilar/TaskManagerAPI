@@ -4,7 +4,9 @@ using NLog.Extensions.Logging;
 using NLog.Web;
 using TaskManagerAPI.Core.Application.Interfaces;
 using TaskManagerAPI.Core.Application.Services;
+using TaskManagerAPI.Core.Domain.Interfaces;
 using TaskManagerAPI.Core.Infrastructure.Data;
+using TaskManagerAPI.Core.Infrastructure.Repositories;
 
 namespace TaskManagerAPI.API.Extensions;
 
@@ -36,7 +38,7 @@ public static class ServiceExtensions
 
     public static void ConfigureServices(this IServiceCollection services)
     {
-        //services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+        services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
         services.AddScoped<ITareaService, TareaService>();
         // Agrega aquí otros servicios según sea necesario
     }

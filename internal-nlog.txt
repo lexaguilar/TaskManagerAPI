@@ -28,3 +28,27 @@
 2025-04-07 15:02:12.6936 Info Logger has been closed down.
 2025-04-07 15:02:12.7508 Info AppDomain Shutting down. LogFactory closing...
 2025-04-07 15:02:12.7508 Info LogFactory has been closed.
+2025-04-15 09:28:33.8102 Info Registered target NLog.Targets.FileTarget(Name=file)
+2025-04-15 09:28:33.8331 Info Registered target NLog.Targets.ConsoleTarget(Name=console)
+2025-04-15 09:28:33.8474 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.4.0.3182. Product version: 5.4.0+4d45d445601312040107cbe2ac00e56c4bf4a60b. GlobalAssemblyCache: False
+2025-04-15 09:28:33.8760 Info Validating config: TargetNames=file, console, ConfigItems=35, FilePath=C:\Proyects\curso\App\TaskManagerAPI\bin\Debug\net8.0\nlog.config
+2025-04-15 09:28:33.8994 Info Configuration initialized.
+2025-04-15 09:28:42.5114 Info Shutdown() called. Logger closing...
+2025-04-15 09:28:42.5196 Info Closing old configuration.
+2025-04-15 09:28:42.5485 Info Logger has been closed down.
+2025-04-15 09:31:29.5624 Info Registered target NLog.Targets.FileTarget(Name=file)
+2025-04-15 09:31:29.5805 Info Registered target NLog.Targets.ConsoleTarget(Name=console)
+2025-04-15 09:31:29.5944 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.4.0.3182. Product version: 5.4.0+4d45d445601312040107cbe2ac00e56c4bf4a60b. GlobalAssemblyCache: False
+2025-04-15 09:31:29.6187 Info Validating config: TargetNames=file, console, ConfigItems=35, FilePath=C:\Proyects\curso\App\TaskManagerAPI\bin\Debug\net8.0\nlog.config
+2025-04-15 09:31:29.6341 Info Configuration initialized.
+2025-04-15 09:33:22.9209 Info Shutdown() called. Logger closing...
+2025-04-15 09:33:22.9288 Info Closing old configuration.
+2025-04-15 09:33:22.9529 Info Logger has been closed down.
+2025-04-15 09:33:26.4166 Info Registered target NLog.Targets.FileTarget(Name=file)
+2025-04-15 09:33:26.4439 Info Registered target NLog.Targets.ConsoleTarget(Name=console)
+2025-04-15 09:33:26.4568 Info NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 5.4.0.3182. Product version: 5.4.0+4d45d445601312040107cbe2ac00e56c4bf4a60b. GlobalAssemblyCache: False
+2025-04-15 09:33:26.4746 Info Validating config: TargetNames=file, console, ConfigItems=35, FilePath=C:\Proyects\curso\App\TaskManagerAPI\bin\Debug\net8.0\nlog.config
+2025-04-15 09:33:26.4951 Info Configuration initialized.
+2025-04-15 09:33:46.3537 Info Shutdown() called. Logger closing...
+2025-04-15 09:33:46.3615 Info Closing old configuration.
+2025-04-15 09:33:46.3863 Info Logger has been closed down.
