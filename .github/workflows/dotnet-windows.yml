@@ -57,13 +57,9 @@ jobs:
     - name: Build Docker Image
       shell: cmd
       run: |
-        @echo off
-        if not defined FULL_VERSION (
-          echo ::error::FULL_VERSION is not defined
-          exit /b 1
-        )
+        @echo off       
         echo Building version: %FULL_VERSION%        
-        docker build -t lexaguilar/taskmanagerapi:v%FULL_VERSION% --build-arg BUILD_VERSION=%FULL_VERSION% .
+        docker build -t taskmanagerapi:lastest --build-arg BUILD_VERSION=%FULL_VERSION% .
 
     - name: Deploy Container
       shell: cmd
