@@ -1,0 +1,67 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+
+    steps:  
+    - uses: actions/checkout@v4
+
+    - name: Setup Docker
+      run: |
+        # Verificar que Docker está corriendo
+        docker --version
+        docker ps
+    
+    - name: Extract AssemblyVersion and Set FULL_VERSION
+      id: version-extractor
+      shell: cmd
+      run: |
+        @echo off
+        setlocal enabledelayedexpansion
+        
+        REM Extraer AssemblyVersion usando PowerShell tradicional (powershell.exe)
+        for /f "delims=" %%i in ('powershell.exe -command "(Select-String -Path './TaskManagerAPI.csproj' -Pattern '<AssemblyVersion>(.*?)</AssemblyVersion>').Matches.Groups[1].Value"') do (
+          set ASSEMBLY_VERSION=%%i
+          echo Extracted AssemblyVersion: !ASSEMBLY_VERSION!
+        )
+        
+        if not defined ASSEMBLY_VERSION (
+          echo ::error::Could not extract AssemblyVersion from csproj file
+          exit /b 1
+        )
+        
+        REM Combinar con GITHUB_RUN_NUMBER
+        set FULL_VERSION=!ASSEMBLY_VERSION!.%GITHUB_RUN_NUMBER%
+        echo Generated FULL_VERSION: !FULL_VERSION!
+        
+        REM Establecer variables de entorno (método compatible)
+        echo FULL_VERSION=!FULL_VERSION! >> "%GITHUB_ENV%"
+        
+    - name: Debug Version Info
+      shell: cmd
+      run: |
+        echo FULL_VERSION: %FULL_VERSION%
+        echo GITHUB_RUN_NUMBER: %GITHUB_RUN_NUMBER%
+    
+    - name: Build Docker Image
+      shell: cmd
+      run: |
+        @echo off
+        if not defined FULL_VERSION (
+          echo ::error::FULL_VERSION is not defined
+          exit /b 1
+        )
+        echo Building version: %FULL_VERSION%        
+      # docker build -t lexaguilar/backend-loginsuite-master:v%FULL_VERSION% -f ./LoguinSuite/Dockerfile ./LoguinSuite --build-arg BUILD_VERSION=%FULL_VERSION%
+   
