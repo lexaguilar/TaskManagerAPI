@@ -6,7 +6,7 @@ WORKDIR /app
 COPY . ./
 ARG BUILD_VERSION=0.0.0
 RUN dotnet restore TaskManagerAPI.csproj
-RUN dotnet publish TaskManagerAPI.csproj -c Release -o out -p:Version=%BUILD_VERSION% -p:FileVersion=%BUILD_VERSION% -p:AssemblyVersion=%BUILD_VERSION%
+RUN dotnet publish TaskManagerAPI.csproj -c Release -o out -p:Version=$BUILD_VERSION -p:FileVersion=$BUILD_VERSION -p:AssemblyVersion=$BUILD_VERSION
 
 
 # Etapa de runtime
