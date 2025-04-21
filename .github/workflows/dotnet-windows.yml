@@ -54,11 +54,11 @@ jobs:
          password: ${{ secrets.DOCKER_PASS }}      
     - name: Build Docker Image
       run: |
-         docker build -t lexaguilar/taskmanagerapi:v%FULL_VERSION%  --build-arg BUILD_VERSION=%FULL_VERSION% .
+         docker build -t lexaguilar/taskmanagerapi:lastest  --build-arg BUILD_VERSION=%FULL_VERSION% .
    
     - name: Push Docker Image to Docker Hub
       run: |
-           docker push lexaguilar/taskmanagerapi:v%FULL_VERSION%
+           docker push lexaguilar/taskmanagerapi:lastest
     
     #- name: Build Docker Image
     #  shell: cmd
@@ -91,8 +91,8 @@ jobs:
         echo FULL_VERSION: %FULL_VERSION%
         
         echo "Descargando imagen de Docker Hub..."
-        docker pull lexaguilar/taskmanagerapi:%FULL_VERSION%
-        docker tag lexaguilar/taskmanagerapi:%FULL_VERSION% taskmanagerapi:latest
+        docker pull lexaguilar/taskmanagerapi:lastest
+        docker tag lexaguilar/taskmanagerapi:lastest taskmanagerapi:latest
     
     - name: Deploy Container
       shell: cmd
