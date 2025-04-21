@@ -66,11 +66,11 @@ jobs:
       run: |
         @echo off
         echo "Deteniendo contenedor existente..."
-        docker stop lexaguilar/taskmanagerapi || echo "No se encontró contenedor para detener"
-        docker rm lexaguilar/taskmanagerapi || echo "No se encontró contenedor para remover"
+        docker stop taskmanagerapi || echo "No se encontró contenedor para detener"
+        docker rm taskmanagerapi || echo "No se encontró contenedor para remover"
         
         echo "Iniciando nuevo contenedor..."
-        docker run -d --name lexaguilar/taskmanagerapi -p 5000:8080 --restart unless-stopped -e ASPNETCORE_ENVIRONMENT=Production lexaguilar/taskmanagerapi:v%FULL_VERSION%
+        docker run -d --name taskmanagerapi -p 5000:8080 --restart unless-stopped -e ASPNETCORE_ENVIRONMENT=Production taskmanagerapi:lastest
         
         echo "Contenedor desplegado correctamente"
         docker ps -a
