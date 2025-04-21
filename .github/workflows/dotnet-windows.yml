@@ -10,18 +10,11 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build_and_publish:
+    runs-on: windows-latest  # Usa una máquina Windows Server proporcionada por GitHub
 
-    runs-on: self-hosted
-
-    steps:  
-    - uses: actions/checkout@v4
-
-    - name: Setup Docker
-      run: |
-        # Verificar que Docker está corriendo
-        docker --version
-        docker ps
+    steps:
+    - uses: actions/checkout@v4 
     
     - name: Extract AssemblyVersion and Set FULL_VERSION
       id: version-extractor
@@ -53,14 +46,54 @@ jobs:
       run: |
         echo FULL_VERSION: %FULL_VERSION%
         echo GITHUB_RUN_NUMBER: %GITHUB_RUN_NUMBER%
-    
+
+    - name: Docker Login
+      uses: docker/login-action@v3
+      with:
+         username: ${{ secrets.DOCKER_USER }}
+         password: ${{ secrets.DOCKER_PASS }}      
     - name: Build Docker Image
+      run: |
+         docker build -t lexaguilar/taskmanagerapi:v%FULL_VERSION%  --build-arg BUILD_VERSION=%FULL_VERSION% .
+   
+    - name: Push Docker Image to Docker Hub
+      run: |
+           docker push lexaguilar/taskmanagerapi:v%FULL_VERSION%
+    
+    #- name: Build Docker Image
+    #  shell: cmd
+    #  run: |
+    #    @echo off       
+    #    echo Building version: %FULL_VERSION%        
+    #    docker build -t taskmanagerapi:%FULL_VERSION% --build-arg BUILD_VERSION=%FULL_VERSION% .
+    #    docker tag taskmanagerapi:%FULL_VERSION% yourdockerhubusername/taskmanagerapi:%FULL_VERSION%
+    
+    
+
+  deploy:
+    needs: build_and_publish  # Depende del job build_and_publish
+    runs-on: self-hosted  # Se ejecuta en tu servidor self-hosted
+
+    steps:
+    - name: Login to Docker Hub
+      shell: bash
+      env:
+        DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_USER }}
+        DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_PASS }}
+      run: |
+        echo "$DOCKER_HUB_TOKEN" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+    
+    - name: Pull Docker Image
       shell: cmd
       run: |
-        @echo off       
-        echo Building version: %FULL_VERSION%        
-        docker build -t taskmanagerapi:lastest --build-arg BUILD_VERSION=%FULL_VERSION% .
-
+        @echo off
+        echo "Obteniendo versión completa del job anterior..."
+        echo FULL_VERSION: %FULL_VERSION%
+        
+        echo "Descargando imagen de Docker Hub..."
+        docker pull lexaguilar/taskmanagerapi:%FULL_VERSION%
+        docker tag lexaguilar/taskmanagerapi:%FULL_VERSION% taskmanagerapi:latest
+    
     - name: Deploy Container
       shell: cmd
       run: |
@@ -73,7 +106,7 @@ jobs:
         docker run -d --name taskmanagerapi -p 5000:8080 ^
           --restart unless-stopped ^
           -e ASPNETCORE_ENVIRONMENT=Production ^
-          taskmanagerapi:lastest
+          taskmanagerapi:latest
         
         echo "Contenedor desplegado correctamente"
         docker ps -a
