@@ -69,12 +69,12 @@ jobs:
 
     steps:
     - name: Login to Docker Hub
-      shell: bash
+      shell: cmd
       env:
         DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_USER }}
         DOCKER_HUB_TOKEN: ${{ secrets.DOCKER_PASS }}
       run: |
-        echo "$DOCKER_HUB_TOKEN" | docker login -u "$DOCKER_HUB_USERNAME" --password-stdin
+         echo %DOCKER_HUB_TOKEN% | docker login -u %DOCKER_HUB_USERNAME% --password-stdin
     
     - name: Pull Docker Image
       shell: cmd
