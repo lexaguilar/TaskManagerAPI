@@ -54,7 +54,8 @@ jobs:
          password: ${{ secrets.DOCKER_PASS }}      
     - name: Build Docker Image
       run: |
-         docker build -t lexaguilar/taskmanagerapi:v${{ github.run_number }}  --build-arg BUILD_VERSION=${FULL_VERSION} .
+         echo FULL_VERSION: %FULL_VERSION%
+         docker build -t lexaguilar/taskmanagerapi:v${{ github.run_number }}  --build-arg BUILD_VERSION=%FULL_VERSION% .
    
     - name: Push Docker Image to Docker Hub
       run: |
