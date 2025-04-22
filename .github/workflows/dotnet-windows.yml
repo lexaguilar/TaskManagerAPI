@@ -53,6 +53,7 @@ jobs:
          username: ${{ secrets.DOCKER_USER }}
          password: ${{ secrets.DOCKER_PASS }}      
     - name: Build Docker Image
+      shell: cmd
       run: |
          echo FULL_VERSION: %FULL_VERSION%
          docker build -t lexaguilar/taskmanagerapi:v${{ github.run_number }}  --build-arg BUILD_VERSION=%FULL_VERSION% .
